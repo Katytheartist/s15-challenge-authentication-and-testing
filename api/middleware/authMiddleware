@@ -1,5 +1,5 @@
 const { findBy } = require('../users/users-model')
-const {JWT_SECRET} = require('../secrets/')
+const {JWT_SECRET} = require('../secrets')
 const jwt = require('jsonwebtoken')
 
 const validateUsernamePassword = (req, res, next) => {
