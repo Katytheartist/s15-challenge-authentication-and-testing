@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const validateUsernamePassword = (req, res, next) => {
     const { username, password } = req.body
     if (!username || !password) {
-        next({ status: 400, message: 'Username and password required!' })
+        next({ status: 400, message: 'username and password required' })
     } else {
         next()
     }
@@ -15,7 +15,7 @@ const checkUsernameExists = async (req, res, next) => {
     try {
         const [user] = await findBy({ username: req.body.username })
         if (!user) {
-            next({ status: 422, message: "Invalid credentials" })
+            next({ status: 422, message: "invalid credentials" })
         } else {
             req.user = user
             next()
@@ -29,7 +29,7 @@ const checkUsernameUnique = async (req, res, next) => {
     try {
         const [user]=await findBy({username: req.body.username})
         if(user){
-          next({status: 400, message: "Username taken"})
+          next({status: 400, message: "username taken"})
         } else {
           next()
         }
