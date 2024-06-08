@@ -1,0 +1,45 @@
+const { findBy } = require('../users/users-model')
+const {JWT_SECRET} = require('../secrets/')
+const jwt = require('jsonwebtoken')
+
+const validateUsernamePassword = (req, res, next) => {
+    const { username, password } = req.body
+    if (!username || !password) {
+        next({ status: 400, message: 'Username and password required!' })
+    } else {
+        next()
+    }
+}
+
+const checkUsernameExists = async (req, res, next) => {
+    try {
+        const [user] = await findBy({ username: req.body.username })
+        if (!user) {
+            next({ status: 422, message: "Invalid credentials" })
+        } else {
+            req.user = user
+            next()
+        }
+    } catch (err) {
+        next(err)
+    }
+}
+
+const checkUsernameUnique = async (req, res, next) => {
+    try {
+        const [user]=await findBy({username: req.body.username})
+        if(user){
+          next({status: 400, message: "Username taken"})
+        } else {
+          next()
+        }
+       } catch(err){
+        next(err)
+       }
+}
+
+module.exports = {
+    checkUsernameExists,
+    checkUsernameUnique,
+    validateUsernamePassword,
+}
