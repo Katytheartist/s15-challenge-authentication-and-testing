@@ -1,7 +1,8 @@
-const {JWT_SECRET} = require('../secrets/')
+const {JWT_SECRET} = require('../secrets/index.js')
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
+  console.log('restricted triggered')
   const token = req.headers.authorization
   if(!token){
     return next({status: 401, message: "token required"})
@@ -14,7 +15,7 @@ module.exports = (req, res, next) => {
       next()
     }
   })
-  next()
+  
   /*
     IMPLEMENT
 

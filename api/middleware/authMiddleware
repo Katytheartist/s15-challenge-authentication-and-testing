@@ -3,6 +3,7 @@ const {JWT_SECRET} = require('../secrets')
 const jwt = require('jsonwebtoken')
 
 const validateUsernamePassword = (req, res, next) => {
+    console.log('validation and pwd triggered')
     const { username, password } = req.body
     if (!username || !password) {
         next({ status: 400, message: 'username and password required' })
@@ -13,6 +14,7 @@ const validateUsernamePassword = (req, res, next) => {
 
 const checkUsernameExists = async (req, res, next) => {
     try {
+        console.log('username exist mw triggered')
         const [user] = await findBy({ username: req.body.username })
         if (!user) {
             next({ status: 422, message: "invalid credentials" })
@@ -26,6 +28,7 @@ const checkUsernameExists = async (req, res, next) => {
 }
 
 const checkUsernameUnique = async (req, res, next) => {
+    console.log('unique mw triggered')
     try {
         const [user]=await findBy({username: req.body.username})
         if(user){
